@@ -1,34 +1,31 @@
 <script setup>
-import { ref } from "vue"
-import { RouterLink, useRouter } from "vue-router"
-import axios from "axios"
+import { ref } from "vue";
+import { RouterLink, useRouter } from "vue-router";
+import axios from "axios";
 
-import { useUserStore } from "@/stores/user"
+import { useUserStore } from "@/stores/user";
 
-const userStore = useUserStore()
-const router = useRouter()
+const userStore = useUserStore();
+const router = useRouter();
 
 const form = ref({
   email: "",
-  password: ""
-})
+  password: "",
+});
 
 async function login() {
   try {
-    const response = await axios.post(
-      "http://localhost:8080/api/login", {
-          email: form.value.email,
-          password: form.value.password,
-      }
-    )
-    localStorage.setItem('access_token', response.data.data.access_token)
-    localStorage.setItem('token_type', response.data.data.token_type)
+    const response = await axios.post("https://mrazam.xyz/api/login", {
+      email: form.value.email,
+      password: form.value.password,
+    });
+    localStorage.setItem("access_token", response.data.data.access_token);
+    localStorage.setItem("token_type", response.data.data.token_type);
 
     userStore.fetchUser();
-    router.push('/')
-
+    router.push("/");
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 </script>

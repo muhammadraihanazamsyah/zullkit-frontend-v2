@@ -1,27 +1,30 @@
-import { defineStore } from "pinia"
-import axios from "axios"
+import { defineStore } from "pinia";
+import axios from "axios";
 
 export const useUserStore = defineStore({
-    id: "user",
-    state: () => ({
-        user: false
-    }),
-    getters: {
-        isLoggedIn: (state) => state.user !== false,
-        getUser: (state) => state.user
+  id: "user",
+  state: () => ({
+    user: false,
+  }),
+  getters: {
+    isLoggedIn: (state) => state.user !== false,
+    getUser: (state) => state.user,
+  },
+  actions: {
+    async fetchUser() {
+      try {
+        const { data } = await axios.get("https://mrazam.xyz/api/user", {
+          headers: {
+            Authorization:
+              localStorage.getItem("token_type") +
+              " " +
+              localStorage.getItem("access_token"),
+          },
+        });
+        this.user = data;
+      } catch (error) {
+        this.user = false;
+      }
     },
-    actions: {
-        async fetchUser() {
-            try {
-                const { data } = await axios.get('http://localhost:8080/api/user', {
-                    headers: {
-                        Authorization: localStorage.getItem('token_type') + ' ' + localStorage.getItem('access_token')
-                    }
-                })
-                this.user = data
-            } catch (error) {
-                this.user = false
-            }
-        }
-    }
-})
+  },
+});

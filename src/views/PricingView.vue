@@ -7,7 +7,7 @@ import FeatureLists from "@/components/authentication/FeatureLists.vue";
 async function checkout(price) {
   try {
     const response = await axios.post(
-      "http://localhost:8080/api/checkout",
+      "https://mrazam.xyz/api/checkout",
       {
         payment_total: price,
         payment_status: "PENDING",

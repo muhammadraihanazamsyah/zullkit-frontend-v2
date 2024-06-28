@@ -3,39 +3,35 @@ import { ref } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 import axios from "axios";
 
-import { useUserStore } from "@/stores/user"
+import { useUserStore } from "@/stores/user";
 
-const userStore = useUserStore()
-const router = useRouter()
+const userStore = useUserStore();
+const router = useRouter();
 
 const form = ref({
   name: "",
   email: "",
   password: "",
-  title: "Designer"
+  title: "Designer",
 });
 
 async function register() {
   try {
-    const response = await axios.post(
-      "http://localhost:8080/api/register", {
-          name: form.value.name,
-          email: form.value.email,
-          password: form.value.password,
-          title: form.value.title,
-      }
-    );
-    localStorage.setItem('access_token', response.data.data.access_token)
-    localStorage.setItem('token_type', response.data.data.token_type)
+    const response = await axios.post("https://mrazam.xyz/api/register", {
+      name: form.value.name,
+      email: form.value.email,
+      password: form.value.password,
+      title: form.value.title,
+    });
+    localStorage.setItem("access_token", response.data.data.access_token);
+    localStorage.setItem("token_type", response.data.data.token_type);
 
     userStore.fetchUser();
-    router.push('/')
-
+    router.push("/");
   } catch (error) {
     console.error(error);
   }
 }
-
 </script>
 
 <template>
@@ -65,7 +61,7 @@ async function register() {
     <div class="mb-4">
       <label class="block mb-1" for="password">Password</label>
       <input
-      @keyup.enter="register"
+        @keyup.enter="register"
         v-model="form.password"
         placeholder="Type your password"
         id="password"

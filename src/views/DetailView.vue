@@ -15,8 +15,7 @@ const item = ref(false);
 async function getProduct() {
   try {
     const response = await axios.get(
-      "http://localhost:8080/api/products?id=" +
-        route.params.id
+      "https://mrazam.xyz/api/products?id=" + route.params.id
     );
     item.value = response.data.data;
   } catch (error) {
@@ -106,7 +105,8 @@ onMounted(() => {
                 <a
                   v-if="user.data.subscription.length > 0"
                   :href="item.file"
-                  class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow" target="_blank"
+                  class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow"
+                  target="_blank"
                 >
                   Download Now
                 </a>
